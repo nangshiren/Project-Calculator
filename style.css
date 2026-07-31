@@ -9,18 +9,23 @@ body{
     flex-direction: column;
     margin: 0 auto;
     width: 400px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #222;
 }
-.display{
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    border:solid rgb(27, 27, 27) 1px;
-    height:100px;
-    width: 400px;
-    border-radius: 6px;
+.display {
+    height: 80px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #eee;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
-.input{
-    font-size: 60px;
+p{
+    font-size: 50px;
+    overflow-x: auto;
 }
 .buttons{
     box-sizing: border-box;
@@ -41,5 +46,11 @@ body{
     border-radius: 8px;
 }
 button:active {
-    transform: scale(0.95);
+    transform: scale(0.9);
+}
+button:hover {
+    filter: brightness(1.1);
+}
+button {
+    transition: 0.1s;
 }
