@@ -57,13 +57,22 @@ function operate(a, operator, b){
             return divide(a,b);
         default:
             return "Error";
+            current = "";
+            firstNumber = "";
+            firstOperator = "";
+            expression = "";
+            c.textContent = "Error";
+            f.textContent = "";
     }
 }
 document.addEventListener("keydown",e=>{
     let k = e.key;
+    console.log(k);
     if (k === "Backspace"){
         k = "delete";
-    }
+    } else if (k ==="Escape"){
+        k = "clear";
+    } else if (k ==="")
     handleInput(k);    
 });
 function handleInput(k){
