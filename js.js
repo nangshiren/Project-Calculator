@@ -1,3 +1,35 @@
+const operators = [7,8,9,"+",
+                   4,5,6,"-",
+                   1,2,3,"*",
+                   "/",".","delete","=",
+                   "clear"   
+                ]
+const calculator = document.querySelector(".calculator");
+const display = document.querySelector(".display");
+const buttons = document.querySelector(".buttons");
+
+for (let i = 0;i < operators.length;i++){
+    const btn = document.createElement("button");
+    btn.textContent = operators[i];
+    if(!isNaN(btn.textContent)){
+        btn.classList.add("number");
+    } else {
+        btn.classList.add("operator");
+    }
+    buttons.appendChild(btn);
+}
+console.log("初始化 current");
+buttons.addEventListener("click",e=>{
+    let k = e.target.textContent;
+    handleInput(k);
+});
+const f = document.querySelector(".formula");
+const c = document.querySelector(".currentNumber");
+let current = "";
+let firstNumber = "";
+let firstOperator = "";
+let expression = "";
+
 function add(a,b){
     return a + b;
 }
@@ -13,79 +45,85 @@ function divide(a,b){
     }
     return a / b;
 }
-function operate(a,operator,b){
+function operate(a, operator, b){
     switch(operator){
         case "+":
-           return add(a,b);
+            return add(a,b);
         case "-":
-           return subtract(a,b);
+            return subtract(a,b);
         case "*":
-           return multiply(a,b);
+            return multiply(a,b);
         case "/":
-           return divide(a,b);
+            return divide(a,b);
+        default:
+            return "Error";
     }
-} 
-const operators = [7,8,9,"-",
-                    4,5,6,"+",
-                    1,2,3,"*",
-                    0,"=","/","clear",".","delete"]
-const calculator = document.querySelector(".calculator");
-const display = document.querySelector(".display");
-const buttons = document.querySelector(".buttons");
-buttons.addEventListener("click",handleClick);
-for (let i = 0;i < operators.length;i++){
-    const btn = document.createElement("button");
-    btn.textContent = operators[i];
-    btn.classList.add("operator");
-    buttons.appendChild(btn);
 }
-
-let currentNumber = "";
-let firstNumber = "";
-let firstOperator = "";
-const p = document.querySelector("p");
-function handleClick(e){
-    let k = e.target.textContent;
-    if (!isNaN(k)) {
-        currentNumber += k;
-        p.textContent = currentNumber;
-    } else if ( k ==="."){
-        if (!currentNumber.includes(".")){
-            if (currentNumber === "") {
-            currentNumber = "0";
-        }
-            currentNumber += k;
-            p.textContent = currentNumber;
-        } 
+document.addEventListener("keydown",e=>{
+    let k = e.key;
+    if (k === "Backspace"){
+        k = "delete";
     }
-     else if ( k === "+" || k === "-" ||
-                k === "*" || k === "/"
-    ) {
-        if (currentNumber === "." || currentNumber === ""  ){
-            return;
-        } else if (currentNumber !== "" && firstNumber !== "" ){
-            let result = operate(Number(firstNumber),firstOperator,Number(currentNumber));
-            firstNumber = Number(result.toFixed(5));
-            p.textContent = firstNumber;
-        } else{
-            firstNumber = currentNumber;
+    handleInput(k);    
+});
+function handleInput(k){
+    console.log(k);
+    if (!isNaN(k)){
+        if (firstNumber !=="" && firstOperator ===""){
+            firstNumber = "";
+            current ="";
+            current += k;
+            c.textContent = current;
+        } else {current += k;
+        c.textContent = current;}
+    } else if(k ==="."){
+        if (current ===""){
+            current = "0.";
+            c.textContent = current;
+        } else if (current !== ""){
+            current += k;
+            c.textContent = current;
         }
-        firstOperator = k;
-        currentNumber = "";
-    } else if ( k === "="){
-        if (currentNumber !== "" && firstNumber !== "" ){
-            let result = operate(Number(firstNumber),firstOperator,Number(currentNumber));
-            firstNumber = Number(result.toFixed(5));
-            p.textContent = firstNumber;
-            currentNumber = "";
+    } 
+    else if(k === "+" ||
+              k === "-" ||
+              k === "*" ||
+              k === "/" 
+    ) {
+        if (firstNumber === "" & current !==""){
+            firstNumber = current;
+            firstOperator = k;
+            f.textContent = firstNumber + k;
+            current = "";
+        } else if (firstNumber !== "" && current !== ""){
+            firstNumber = operate(Number(firstNumber),firstOperator,Number(current));
+            firstOperator = k;
+            f.textContent = firstNumber + k;
+            current = "";
+        } else if (firstNumber !== "" && current === "") {
+            firstOperator = k;
+            f.textContent = firstNumber + k;
+        }
+    } else if(k==="="){
+        if(firstNumber !== "" && current !== ""){
+            firstNumber = operate(Number(firstNumber),firstOperator,Number(current));
+            f.textContent = firstNumber;
+            firstOperator = "";
+            current = "";
+        } else {
+            return;
+        }
+    } else if (k === "delete"){
+        if(current !== ""){
+            current = current.slice(0,-1);
+            c.textContent = current;
         }
     } else if (k === "clear"){
-        currentNumber = "";
+        current = "";
         firstNumber = "";
         firstOperator = "";
-        p.textContent = "";
-    } else if (k === "delete") {
-    currentNumber = currentNumber.slice(0, -1);
-    p.textContent = currentNumber;
-}
+        expression = "";
+        c.textContent = "";
+        f.textContent = "";
+    }
 }

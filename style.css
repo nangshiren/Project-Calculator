@@ -11,20 +11,33 @@ body{
     width: 400px;
     padding: 20px;
     border-radius: 20px;
-    background-color: #222;
+    background-color: #676363;
 }
 .display {
-    height: 80px;
+    height: 100px;
     margin-bottom: 20px;
     padding: 10px;
     border-radius: 10px;
     background-color: #eee;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
 }
-p{
+
+
+.formula{
+    margin: 0;
+    font-size: 20px;
+    height: 30px;
+}
+
+
+.currentDisplay{
+    margin: 0;
     font-size: 50px;
+    max-width: 100%;
     overflow-x: auto;
 }
 .buttons{
