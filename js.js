@@ -18,7 +18,6 @@ for (let i = 0;i < operators.length;i++){
     }
     buttons.appendChild(btn);
 }
-console.log("初始化 current");
 buttons.addEventListener("click",e=>{
     let k = e.target.textContent;
     handleInput(k);
@@ -67,16 +66,14 @@ function operate(a, operator, b){
 }
 document.addEventListener("keydown",e=>{
     let k = e.key;
-    console.log(k);
     if (k === "Backspace"){
         k = "delete";
     } else if (k ==="Escape"){
         k = "clear";
-    } else if (k ==="")
+    }
     handleInput(k);    
 });
 function handleInput(k){
-    console.log(k);
     if (!isNaN(k)){
         if (firstNumber !=="" && firstOperator ===""){
             firstNumber = "";
