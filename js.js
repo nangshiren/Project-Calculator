@@ -55,7 +55,6 @@ function operate(a, operator, b){
         case "/":
             return divide(a,b);
         default:
-            return "Error";
             current = "";
             firstNumber = "";
             firstOperator = "";
@@ -66,12 +65,16 @@ function operate(a, operator, b){
 }
 document.addEventListener("keydown",e=>{
     let k = e.key;
-    if (k === "Backspace"){
+    if(k === "Backspace"){
         k = "delete";
-    } else if (k ==="Escape"){
+    } 
+    else if(k === "Escape"){
         k = "clear";
     }
-    handleInput(k);    
+    else if(k === "Enter"){
+        k = "=";
+    }
+    handleInput(k);
 });
 function handleInput(k){
     if (!isNaN(k)){
@@ -96,7 +99,7 @@ function handleInput(k){
               k === "*" ||
               k === "/" 
     ) {
-        if (firstNumber === "" & current !==""){
+        if (firstNumber === "" && current !==""){
             firstNumber = current;
             firstOperator = k;
             f.textContent = firstNumber + k;
